@@ -9,9 +9,11 @@ const { NotFoundError } = require("./expressError");
 
 const { authenticateJWT } = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
-const companiesRoutes = require("./routes/companies");
-const usersRoutes = require("./routes/users");
-const jobsRoutes = require("./routes/jobs");
+const userRoutes = require("./routes/users");
+
+const workoutRoutes = require("./routes/workouts");
+const exerciseRoutes = require("./routes/exercises");
+const historyRoutes = require("./routes/histories")
 
 const morgan = require("morgan");
 
@@ -22,10 +24,12 @@ app.use(express.json());
 app.use(morgan("tiny"));
 app.use(authenticateJWT);
 
-//routes should have login, home, exercises, and user
-// app.use("/auth", authRoutes);
-// app.use("/exercises", exercisesRoutes);
-// app.use("/user", userRoutes);
+
+app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
+app.use("/workout", workoutRoutes);
+app.use("/exercise", exerciseRoutes);
+app.use("/history", historyRoutes);
 
 
 /** Handle 404 errors -- this matches everything */
