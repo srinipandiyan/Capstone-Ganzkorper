@@ -3,3 +3,4 @@
 backend/node_modules/
 backend/config.js
 backend/config.test.js
+frontend/node_modules/
