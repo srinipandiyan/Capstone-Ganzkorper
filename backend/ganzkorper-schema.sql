@@ -8,9 +8,9 @@ CREATE TABLE users (
 
 CREATE TABLE workouts (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER,
+  user INTEGER,
   workout_name VARCHAR,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user) REFERENCES users(username)
 );
 
 CREATE TABLE exercises (

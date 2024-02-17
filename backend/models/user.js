@@ -82,7 +82,7 @@ class User {
     return user;
   }
   
-  /** Given a username, return data about user.
+  /** Given a username, return workouts made by user.
    *
    * Returns [ workouts, ...]
    *   where workouts is { id, workout_name }

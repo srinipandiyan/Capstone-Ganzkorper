@@ -2,6 +2,7 @@
 
 const db = require("../db");
 const { v4: uuidv4 } = require('uuid');
+const { sqlForPartialUpdate } = require("../helpers/sql");
 const { NotFoundError} = require("../expressError");
 
 /** Related functions for workouts. */
@@ -12,13 +13,13 @@ class Workout {
    * Returns { id, user_id, workout_name }
    **/
 
-static async create(userId, workoutName) {
+static async create(user, workoutName) {
     const id = uuidv4();
     const result = await db.query(
           `INSERT INTO workouts (id, user_id, workout_name)
            VALUES ($1, $2, $3)
-           RETURNING id, user_id AS "userId", workout_name AS "workoutName"`,
-        [ id, userId, workoutName ]);
+           RETURNING id, user, workout_name AS "workoutName"`,
+        [ id, user, workoutName ]);
 
     let workout = result.rows[0];
 
@@ -27,21 +28,21 @@ static async create(userId, workoutName) {
 
   /** Finds all exercises associated with the workout id
    *  Returns [ exercise, ...]
-   *   where exercise is { id, workout_id, exercise_data, weight_used, num_sets, num_reps, created_at }
+   *   where exercise is { id, workoutId, name, type, muscle, equipment, difficulty, instructions }
    * */
   
-  static async getExercises(workoutId) {
+  static async getExercises(workoutName) {
     const exercisesQuery = await db.query(
       `SELECT id, name, type, muscle, equipment, difficulty, instructions
        FROM exercises
-       WHERE workout_id = $1`,
-      [workoutId],
+       WHERE name = $1`,
+      [workoutName],
     );
   
     const exercises = exercisesQuery.rows.map(row => ({
       id: row.id,
-      workoutId: workoutId,
-      name: row.name,
+      workoutId: row.workout_id,
+      name: workoutName,
       type: row.type,
       muscle: row.muscle,
       equipment: row.equipment,
@@ -55,7 +56,42 @@ static async create(userId, workoutName) {
   
     return exercises;
   }
-  
+
+  /** Update workout name.
+   * 
+   * This is a "partial update" --- it's fine if data doesn't contain
+   * all the fields; this only changes provided ones.
+   * 
+   * Data can include:
+   *   { name: 'new_workout_name' }
+   * 
+   * returns workout { name }
+  */
+  static async update(workoutName, newName) {
+    const { setCols, values } = sqlForPartialUpdate(
+      { name: newName },
+      {
+        name: "name",
+      });
+
+      const workoutNameVarIdx = "$" + (values.length + 1);
+
+    const querySql = `
+      UPDATE users
+      SET ${setCols}
+      WHERE username = $${workoutNameVarIdx} 
+      RETURNING *
+    `;
+
+    const result = await db.query(querySql, [...values, workoutName]);
+    const updatedWorkout = result.rows[0];
+
+    if (!updatedWorkout) {
+      throw new NotFoundError(`No workout found with name: ${workoutName}`);
+    }
+
+    return updatedWorkout;
+  }
   
 
   /** 
