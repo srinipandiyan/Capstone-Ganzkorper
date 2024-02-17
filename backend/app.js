@@ -10,7 +10,6 @@ const { NotFoundError } = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
-
 const workoutRoutes = require("./routes/workouts");
 const exerciseRoutes = require("./routes/exercises");
 const historyRoutes = require("./routes/histories")
