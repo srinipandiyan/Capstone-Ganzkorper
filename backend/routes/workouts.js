@@ -4,7 +4,6 @@
 
 const jsonschema = require("jsonschema");
 
-
 const express = require("express");
 const { verifyUserOrAdmin } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");

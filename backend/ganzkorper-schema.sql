@@ -8,14 +8,14 @@ CREATE TABLE users (
 
 CREATE TABLE workouts (
   id SERIAL PRIMARY KEY,
-  user INTEGER,
+  user VARCHAR,
   workout_name VARCHAR,
   FOREIGN KEY (user) REFERENCES users(username)
 );
 
 CREATE TABLE exercises (
   id SERIAL PRIMARY KEY,
-  workout_id INTEGER,
+  workout_name VARCHAR,
   name VARCHAR,
   type VARCHAR,
   muscle VARCHAR,

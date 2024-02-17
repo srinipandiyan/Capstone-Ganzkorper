@@ -8,18 +8,18 @@ const { NotFoundError} = require("../expressError");
 
 class Exercise {
 /** Creates an exercise, updates the db, and returns the new exercise data.
-   * Accepts workout_id and JSON data from API as API
-   * Returns { id, workout_id, exercise_data, weight_used, num_sets, num_reps, created_at }
+   * Accepts workout_id and JSON data from API as data
+   * Returns { id, workout_id, name, type, muscle, equipment, difficulty, instructions }
    **/
 
-static async create(workoutId, API) {
+static async create(data) {
     const id = uuidv4();
-    const { name, type, muscle, equipment, difficulty, instructions } = API;
+    const { name, type, muscle, equipment, difficulty, instructions } = data;
     const result = await db.query(
-          `INSERT INTO exercises (id, workout_id, name, type, muscle, equipment, difficulty, instructions)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-           RETURNING id, workout_id AS "workoutId", name, type, muscle, equipment, difficulty, instructions`,
-        [id, workoutId, name, type, muscle, equipment, difficulty, instructions]);
+          `INSERT INTO exercises (id, name, type, muscle, equipment, difficulty, instructions)
+           VALUES ($1, $2, $3, $4, $5, $6, $7)
+           RETURNING id, name, type, muscle, equipment, difficulty, instructions`,
+        [id, name, type, muscle, equipment, difficulty, instructions]);
 
     let exercise = result.rows[0];
 
@@ -28,7 +28,7 @@ static async create(workoutId, API) {
 
   /** Finds all histories associated with the exercise id
    *  Returns [ history, ...]
-   *   where history is { id, exercise_id, exercise_data, weight_used, num_sets, num_reps, created_at }
+   *   where history is { id, exercise_id, weight_used, num_sets, num_reps, created_at }
    * */
   
   static async getHistories(exerciseId) {
