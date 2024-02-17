@@ -1,5 +1,5 @@
 # .gitignore
-.DS_Store/
+.DS_Store
 backend/node_modules/
 backend/config.js
 backend/config.test.js
