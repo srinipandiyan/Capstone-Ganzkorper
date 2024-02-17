@@ -13,13 +13,13 @@ class Workout {
    * Returns { id, user_id, workout_name }
    **/
 
-static async create(user, workoutName) {
+static async create(userId, workoutName) {
     const id = uuidv4();
     const result = await db.query(
           `INSERT INTO workouts (id, user_id, workout_name)
            VALUES ($1, $2, $3)
-           RETURNING id, user, workout_name AS "workoutName"`,
-        [ id, user, workoutName ]);
+           RETURNING id, user_id AS "userId", workout_name AS "workoutName"`,
+        [ id, userId, workoutName ]);
 
     let workout = result.rows[0];
 

@@ -11,7 +11,7 @@ const { addExerciseToDatabase } = require("../helpers/addToDb")
 const { BadRequestError } = require("../expressError");
 const Exercise = require("../models/exercise");
 const API_KEY = require("../config");
-const exerciseCreateSchema = require("../schemas/exerciseCreate.json");
+const exerciseSchema = require("../schemas/exercise.json");
 
 const router = new express.Router();
 
@@ -49,7 +49,16 @@ router.get("/:muscle", verifyUserOrAdmin, async function (req, res, next) {
       });
 
       const exercisesList = JSON.parse(response);
-
+      
+      //exercise validation
+      exercisesList.forEach(exercise => {
+        const validator = jsonschema.validate(exercise, exerciseSchema);
+        if (!validator.valid) {
+          const errs = validator.errors.map(e => e.stack);
+          throw new BadRequestError(errs);
+        }
+      });
+      
       //Add all exercises in API call to exercise table in database
       for (const exercise of exercisesList) {
         await addExerciseToDatabase(exercise);
@@ -61,20 +70,20 @@ router.get("/:muscle", verifyUserOrAdmin, async function (req, res, next) {
     }
 });
 
-/** POST /add => { id, workout_id, name, type, muscle, equipment, difficulty, instructions }
+/** POST / => { id, workout_id, name, type, muscle, equipment, difficulty, instructions }
  * Creates an exercise for use in database.
  *
  * Authorization required: username-matched user or admin
  **/
-router.get("/add", verifyUserOrAdmin, async function (req, res, next) {
+router.post("/", verifyUserOrAdmin, async function (req, res, next) {
     try {
-        const validator = jsonschema.validate(req.body, exerciseCreateSchema);
+        const validator = jsonschema.validate(req.body, exerciseSchema);
         if (!validator.valid) {
             const errs = validator.errors.map(e => e.stack);
             throw new BadRequestError(errs);
         }
       const exercise = await Exercise.create(req.body);
-      return res.json({ exercise });
+      return res.status(201).json({ exercise });
     } catch (err) {
       return next(err);
     }

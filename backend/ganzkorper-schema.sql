@@ -8,21 +8,19 @@ CREATE TABLE users (
 
 CREATE TABLE workouts (
   id SERIAL PRIMARY KEY,
-  user VARCHAR,
+  user_id VARCHAR,
   workout_name VARCHAR,
-  FOREIGN KEY (user) REFERENCES users(username)
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE exercises (
   id SERIAL PRIMARY KEY,
-  workout_name VARCHAR,
   name VARCHAR,
   type VARCHAR,
   muscle VARCHAR,
   equipment VARCHAR,
   difficulty VARCHAR,
   instructions VARCHAR,
-  FOREIGN KEY (workout_id) REFERENCES workouts(id)
 );
 
 CREATE TABLE histories (

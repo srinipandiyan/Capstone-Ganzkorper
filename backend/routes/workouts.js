@@ -29,21 +29,21 @@ router.get("/:workoutName", verifyUserOrAdmin, async function (req, res, next) {
 });
 
 
-/** POST /[user] => { id, user_id, workout_name }
+/** POST /[user] => { id, userId, workoutName }
  *
  * Creates a workout.
  *
  * Authorization required: username-matched user or admin
  **/
-router.get("/:user", verifyUserOrAdmin, async function (req, res, next) {
+router.post("/:userId", verifyUserOrAdmin, async function (req, res, next) {
     try {
         const validator = jsonschema.validate(req.body, workoutCreateSchema);
         if (!validator.valid) {
             const errs = validator.errors.map(e => e.stack);
             throw new BadRequestError(errs);
         }
-      const workout = await Workout.create(req.params.user, req.body);
-      return res.json({ workout });
+      const workout = await Workout.create(req.params.userId, req.body);
+      return res.status(201).json({ workout });
     } catch (err) {
       return next(err);
     }
