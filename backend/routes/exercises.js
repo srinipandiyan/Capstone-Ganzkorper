@@ -3,7 +3,7 @@
 /** Routes for exercises. */
 
 const jsonschema = require("jsonschema");
-const request = require("request-promise");
+const axios = require("axios"); 
 
 const express = require("express");
 const { verifyUserOrAdmin, verifyAdmin } = require("../middleware/auth");
@@ -37,38 +37,37 @@ router.get("/:exerciseId", verifyUserOrAdmin, async function (req, res, next) {
  * Authorization required: username-matched user or admin
  **/
 router.get("/:muscle", verifyUserOrAdmin, async function (req, res, next) {
-    try {
-      const muscle = req.params.muscle;
+  try {
+        const muscle = req.params.muscle;
 
-      //Make a GET request to the external API to fetch exercises by muscle
-      const response = await request.get({
-        url: `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`,
-        headers: {
-          'X-Api-Key': API_KEY
+        const response = await axios.get(`https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`, {
+            headers: {
+                'X-Api-Key': API_KEY
+            }
+        });
+
+        const exercisesList = response.data;
+
+        //Eercise validation
+        exercisesList.forEach(exercise => {
+            const validator = jsonschema.validate(exercise, exerciseSchema);
+            if (!validator.valid) {
+                const errs = validator.errors.map(e => e.stack);
+                throw new BadRequestError(errs);
+            }
+        });
+
+        //Add all exercises in API call to exercise table in database
+        for (const exercise of exercisesList) {
+            await addExerciseToDatabase(exercise);
         }
-      });
 
-      const exercisesList = JSON.parse(response);
-      
-      //exercise validation
-      exercisesList.forEach(exercise => {
-        const validator = jsonschema.validate(exercise, exerciseSchema);
-        if (!validator.valid) {
-          const errs = validator.errors.map(e => e.stack);
-          throw new BadRequestError(errs);
-        }
-      });
-      
-      //Add all exercises in API call to exercise table in database
-      for (const exercise of exercisesList) {
-        await addExerciseToDatabase(exercise);
-      }
-
-      return res.json({ exercisesList });
+        return res.json({ exercisesList });
     } catch (error) {
       return next(error);
-    }
+  }
 });
+
 
 /** POST / => { id, workout_id, name, type, muscle, equipment, difficulty, instructions }
  * Creates an exercise for use in database.
