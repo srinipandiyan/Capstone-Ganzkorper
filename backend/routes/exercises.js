@@ -15,21 +15,6 @@ const exerciseSchema = require("../schemas/exercise.json");
 
 const router = new express.Router();
 
-/** GET /[exerciseId] => { [ { id, exerciseId, weightUsed, numSets, numReps, createdAt }, ... ] }
- *
- * Returns list of all histories for a workout.
- *
- * Authorization required: username-matched user or admin
- **/
-router.get("/:exerciseId", verifyUserOrAdmin, async function (req, res, next) {
-    try {
-      const histories = await Exercise.getHistories(req.params.exerciseId);
-      return res.json({ histories });
-    } catch (err) {
-      return next(err);
-    }
-});
-
 /** GET /[muscle] => { [ { name, type, muscle, equipment, difficulty, instructions }, ... ] }
  *
  * Returns a list of matching exercises by muscle query.

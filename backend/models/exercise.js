@@ -31,16 +31,17 @@ static async create(data) {
    *   where history is { id, exercise_id, weight_used, num_sets, num_reps, created_at }
    * */
   
-  static async getHistories(exerciseId) {
+  static async getHistories(userRef, exerciseId) {
     const historiesQuery = await db.query(
       `SELECT id, exercise_id, weight_used, num_sets, num_reps, created_at
        FROM histories
-       WHERE exercise_id = $1`,
-      [exerciseId],
+       WHERE user_ref = $1 AND exercise_id = $2`,
+      [userRef, exerciseId],
     );
   
     const histories = historiesQuery.rows.map(row => ({
         id: row.id,
+        userRef: row.user_ref,
         exerciseId: row.exercise_id,
         weightUsed: row.weight_used,
         numSets: row.num_sets,

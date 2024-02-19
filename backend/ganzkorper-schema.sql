@@ -26,7 +26,7 @@ CREATE TABLE exercises (
 CREATE TABLE histories (
   id VARCHAR PRIMARY KEY, --uuid generate v4
   user_ref VARCHAR,
-  exercise_id UUID,
+  exercise_id VARCHAR,
   weight_used INTEGER,
   num_sets INTEGER,
   num_reps INTEGER,
