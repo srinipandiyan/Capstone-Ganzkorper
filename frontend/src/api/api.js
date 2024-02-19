@@ -10,7 +10,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
  *
  */
 
-class JoblyApi {
+class GanzkorperApi {
   // the token for interactive with the API will be stored here.
   static token;
 
@@ -48,46 +48,68 @@ class JoblyApi {
     return res.token;
   }
 
-  /** Save user profile page. */
+  /** Get user profile page. */
   static async saveProfile(username, data) {
     let res = await this.request(`users/${username}`, data, "patch");
     return res.user;
   }
 
-  /** Get the current user. */
-  static async getCurrentUser(username) {
-    let res = await this.request(`users/${username}`);
-    return res.user;
+  /** Delete a user. */
+  static async removeUser(username) {
+    let res = await this.request(`users/${username}`, "delete");
+    return res;
   }
 
-  /** Get details on a company by handle. */
-  static async getCompany(handle) {
-    let res = await this.request(`companies/${handle}`);
-    return res.company;
+  /** Get workouts by user. */
+  static async getWorkouts(userRef) {
+    let res = await this.request(`workouts/${userRef}`, "get");
+    return res.workouts;
   }
 
-  /** Get companies (filtered by name if not undefined) */
-  static async getCompanies(name) {
-    let res = await this.request("companies", { name });
-    return res.companies;
-  }
-  
-  /** Get list of jobs (filtered by title if not undefined) */
-  static async getJobs(title) {
-    let res = await this.request("jobs", { title });
-    return res.jobs;
+  /** Create a workout by user. */
+  static async addWorkout(userRef, data) {
+    let res = await this.request(`workouts/${userRef}`, data, "post");
+    return res.workout;
   }
 
-  /** Apply to a job */
-  static async applyToJob(username, id) {
-    await this.request(`users/${username}/jobs/${id}`, {}, "post");
+   /** Update a workout. */
+   static async updateWorkout(workoutName, data) {
+    let res = await this.request(`workouts/${workoutName}`, data, "patch");
+    return res.workout;
+  }
+
+  /** Delete a workout. */
+  static async removeWorkout(id) {
+    let res = await this.request(`workouts/${id}`, "delete");
+    return res;
+  }
+
+  /** Get histories by workout. 
+   * data = {userRef, exerciseId}
+  */
+  static async getHistories(data) {
+    let res = await this.request(`histories`, data, "get");
+    return res.histories;
+  }
+
+  /** Create a history session for an exercise 
+   * data = {userRef, exerciseId, userInput}
+  */
+  static async addHistory (data) {
+    let res = await this.request(`histories`, data, "post");
+    return res.workout;
+  }
+
+  /** Delete a history session. */
+  static async removeHistory(id) {
+    let res = await this.request(`histories/${id}`, "delete");
+    return res;
   }
   
 }
 
-// for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
+GanzkorperApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
     "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
     "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
 
-export default JoblyApi;
+export default GanzkorperApi;
