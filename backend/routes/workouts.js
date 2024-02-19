@@ -13,15 +13,15 @@ const workoutUpdateSchema = require("../schemas/workoutUpdate.json");
 
 const router = new express.Router();
 
-/** GET /[workoutName] => { [ { id, workoutId, name, type, muscle, equipment, difficulty, instructions }, ... ] }
+/** GET /[workoutName] => { [ { id, name, type, muscle, equipment, difficulty, instructions }, ... ] }
  *
  * Returns list of all exercises for a workout.
  *
  * Authorization required: username-matched user or admin
  **/
-router.get("/:workoutName", verifyUserOrAdmin, async function (req, res, next) {
+router.get("/:id", verifyUserOrAdmin, async function (req, res, next) {
     try {
-      const exercises = await Workout.getExercises(req.params.workoutName);
+      const exercises = await Workout.getExercises(req.params.id);
       return res.json({ exercises });
     } catch (err) {
       return next(err);
@@ -29,20 +29,20 @@ router.get("/:workoutName", verifyUserOrAdmin, async function (req, res, next) {
 });
 
 
-/** POST /[user] => { id, userId, workoutName }
+/** POST /[user] => { id, userRef, workoutName }
  *
  * Creates a workout.
  *
  * Authorization required: username-matched user or admin
  **/
-router.post("/:userId", verifyUserOrAdmin, async function (req, res, next) {
+router.post("/:userRef", verifyUserOrAdmin, async function (req, res, next) {
     try {
         const validator = jsonschema.validate(req.body, workoutCreateSchema);
         if (!validator.valid) {
             const errs = validator.errors.map(e => e.stack);
             throw new BadRequestError(errs);
         }
-      const workout = await Workout.create(req.params.userId, req.body);
+      const workout = await Workout.create(req.params.userRef, req.body);
       return res.status(201).json({ workout });
     } catch (err) {
       return next(err);

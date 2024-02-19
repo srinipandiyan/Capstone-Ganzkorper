@@ -3,7 +3,6 @@
 const db = require("../db");
 const { sqlForPartialUpdate } = require("../helpers/sql");
 const bcrypt = require("bcrypt");
-const { v4: uuidv4 } = require('uuid');
 const {
   NotFoundError,
   BadRequestError,
@@ -25,8 +24,7 @@ class User {
   static async authenticate(username, password) {
     // try to find the user first
     const result = await db.query(
-          `SELECT id,
-                  username,
+          `SELECT username,
                   password
            FROM users
            WHERE username = $1`,
@@ -68,13 +66,12 @@ class User {
     }
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
-    const id = uuidv4();
 
     const result = await db.query(
-          `INSERT INTO users (id, username, password)
-           VALUES ($1, $2, $3)
-           RETURNING id, username`,
-        [ id, username, hashedPassword],
+          `INSERT INTO users (username, password)
+           VALUES ($1, $2)
+           RETURNING username`,
+        [ username, hashedPassword],
     );
 
     const user = result.rows[0];
@@ -92,12 +89,11 @@ class User {
 
   static async getWorkouts(username) {
     const userAndWorkoutQuery = await db.query(
-      `SELECT u.id AS "userId",
-              u.username,
+      `SELECT u.username,
               w.id AS "workoutId",
               w.workout_name
        FROM users u
-       LEFT JOIN workouts w ON u.id = w.user_id
+       LEFT JOIN workouts w ON u.username = w.user_ref
        WHERE u.username = $1`,
       [username],
     );

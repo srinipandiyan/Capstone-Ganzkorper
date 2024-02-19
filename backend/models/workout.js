@@ -13,13 +13,13 @@ class Workout {
    * Returns { id, user_id, workout_name }
    **/
 
-static async create(userId, workoutName) {
+static async create(userRef, workoutName) {
     const id = uuidv4();
     const result = await db.query(
-          `INSERT INTO workouts (id, user_id, workout_name)
+          `INSERT INTO workouts (id, user_ref, workout_name)
            VALUES ($1, $2, $3)
-           RETURNING id, user_id AS "userId", workout_name AS "workoutName"`,
-        [ id, userId, workoutName ]);
+           RETURNING id, user_ref AS "userRef", workout_name AS "workoutName"`,
+        [ id, userRef, workoutName ]);
 
     let workout = result.rows[0];
 
@@ -31,17 +31,16 @@ static async create(userId, workoutName) {
    *   where exercise is { id, workoutId, name, type, muscle, equipment, difficulty, instructions }
    * */
   
-  static async getExercises(workoutName) {
+  static async getExercises(id) {
     const exercisesQuery = await db.query(
       `SELECT id, name, type, muscle, equipment, difficulty, instructions
        FROM exercises
-       WHERE name = $1`,
-      [workoutName],
+       WHERE id = $1`,
+      [id],
     );
   
     const exercises = exercisesQuery.rows.map(row => ({
       id: row.id,
-      workoutId: row.workout_id,
       name: workoutName,
       type: row.type,
       muscle: row.muscle,

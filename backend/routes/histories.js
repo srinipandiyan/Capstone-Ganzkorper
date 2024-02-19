@@ -12,7 +12,7 @@ const historyCreateSchema = require("../schemas/historyCreate.json");
 
 const router = new express.Router();
 
-/** POST / => { id, exercise_id, weight_used, num_sets, num_reps }
+/** POST / => { id, user_id, exercise_id, weight_used, num_sets, num_reps }
  * Creates a history session for an exercise.
  *
  * Authorization required: username-matched user or admin

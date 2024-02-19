@@ -1,20 +1,20 @@
 -- Top-down data schema. User > workouts > exercises > histories
 
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  username VARCHAR,
+  username VARCHAR PRIMARY KEY,
   password VARCHAR
 );
 
 CREATE TABLE workouts (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER,
+  id VARCHAR PRIMARY KEY, --uuid generate v4
+  user_ref VARCHAR,
   workout_name VARCHAR,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  exercises VARCHAR[],
+  FOREIGN KEY (user_ref) REFERENCES users(username)
 );
 
 CREATE TABLE exercises (
-  id SERIAL PRIMARY KEY,
+  id VARCHAR PRIMARY KEY, --uuid generate v4
   name VARCHAR,
   type VARCHAR,
   muscle VARCHAR,
@@ -24,11 +24,12 @@ CREATE TABLE exercises (
 );
 
 CREATE TABLE histories (
-  id SERIAL PRIMARY KEY,
-  exercise_id INTEGER,
+  id VARCHAR PRIMARY KEY, --uuid generate v4
+  user_ref VARCHAR,
+  exercise_id UUID,
   weight_used INTEGER,
   num_sets INTEGER,
   num_reps INTEGER,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (exercise_id) REFERENCES exercises(id)
+  FOREIGN KEY (user_ref) REFERENCES users(username)
 );

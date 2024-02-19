@@ -48,7 +48,7 @@ router.get("/:muscle", verifyUserOrAdmin, async function (req, res, next) {
 
         const exercisesList = response.data;
 
-        //Eercise validation
+        //Exercise validation
         exercisesList.forEach(exercise => {
             const validator = jsonschema.validate(exercise, exerciseSchema);
             if (!validator.valid) {
