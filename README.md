@@ -1,9 +1,45 @@
-# Capstone-Ganzkörper
+# Ganzkörper
 
-  Capstone Two will be a fitness tracking web application written using React and Node.js for the frontend and backend, respectively. The fitness tracker will have a frontend focus through the use of an easy-to-update UI. Users will be able to easily track and monitor their workout progression through the app and have access to a database of exercises all in one web space. This app is ready to assist users, regardless of age or background, with an interest in data-driven health and self-improvement. The app will be powered by the wger API.
-  
-  Diving into the technical, the database will be Postgres and I will likely use an ORM, such as Sequelize or Prisma,to manage database processes. As far as sensitive data, users should be protected by hashing passwords before storing them in the database. Potential API issues may include data inconsistencies or changes to the API structure over time. These should be regularly tested for through unit testing. Should an error arise, the GET routes should be updated accordingly.
-  
-  Functionally, the app will contain a home, login, signup, preferences, exercises, and dashboard routes. The homepage will be where the user is greeted and prompted to login or signup. After doing so, a user will be directed towards their dashboard and can view exercise data from previous visits or add new workouts. Users will be able to easily update data from each exercise contained within a workout and track graphical progression over time. With the exercise search feature, users can learn to perform exercises available through [API Ninjas](https://api-ninjas.com/api/exercises).
-  
-  In order to make this app more than CRUD, I would like to emphasize the graphical analysis available to users, which will convert their interval biometric data into measurable wellness insights. As far as stretch goals, I would like to create a buttonless exercise component that will toggle from static to dynamic to update exercise data (sets, reps, weights, or time) using the onClick or a similar handler.
+Capstone Two is a fitness tracking web application built with React for the frontend and Node.js for the backend. The app aims to provide users with an easy-to-use interface to track and monitor their workout progression, all in one convenient web space. Powered by the wger API, users will have access to a comprehensive database of exercises.
+
+## Features
+
+- **User-Friendly Interface**: The app prioritizes frontend user experience with an intuitive and easy-to-update UI.
+- **Workout Tracking**: Users can easily track and monitor their workout progression through the app.
+- **Exercise Database**: Access a vast database of exercises, allowing users to explore and incorporate new exercises into their routine.
+- **Data-Driven Health**: The app empowers users, regardless of age or background, with data-driven insights to support their health and self-improvement goals.
+
+## Technical Details
+
+- **Frontend**: Developed using React.js and Bootstrap, providing a responsive user interface.
+- **Backend**: Node.js serves as the backend, handling data processing and API requests.
+- **Database**: PostgreSQL is used for data storage.
+- **Security**: User passwords are hashed before storage in the database to ensure sensitive data protection.
+- **API Integration**: The app leverages the [Ninja Exercise API](https://api-ninjas.com/api/exercises) for exercise data, with regular testing to address any API-related issues.
+
+## Routes
+
+- **Homepage (/)**: Displays a simple welcome message.
+- **Exercises (/exercises)**: Lists all available exercises.
+- **Exercise Details (/exercises/:exercise)**: Displays details of a specific exercise, such as squat, pull-up, etc.
+- **Workouts (/workouts)**: Displays user dashboard of workouts, allowing users to view and manage their workout data.
+- **Login (/login)**: Provides login/signup functionality.
+- **Signup (/signup)**: Offers a signup form for new users to create an account.
+- **Profile (/profile)**: Allows users to edit their profile information.
+
+## Functionality
+
+- **Dashboard**: Upon logging in, users are directed to their dashboard, where they can view exercise data from previous visits and add new workouts.
+- **Workout Tracking**: Users can track exercises within a workout to monitor progression over time.
+- **Exercise Search**: Users can search and learn about different exercises available through the API.
+- **Stretch Goals**: Plans include implementing a buttonless exercise component for dynamic updating of exercise history data using onClick or similar event handlers.
+
+## Technologies Used
+
+- Axios
+- Express.js
+- Node.js
+- React.js
+- PostgreSQL
+
+This project aims to provide users with a comprehensive fitness tracking solution, combining user-friendly design with powerful functionality to support users in achieving their health and fitness goals.
