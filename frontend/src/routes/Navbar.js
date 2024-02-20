@@ -14,13 +14,13 @@ function Navbar({ logout }) {
     return (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/companies">
-              Companies
+            <NavLink className="nav-link" to="/exercises">
+              Exercises
             </NavLink>
           </li>
           <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/jobs">
-              Jobs
+            <NavLink className="nav-link" to="/workouts">
+              Workouts
             </NavLink>
           </li>
           <li className="nav-item mr-4">
@@ -30,7 +30,7 @@ function Navbar({ logout }) {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/" onClick={logout}>
-              Log out {currentUser.first_name || currentUser.username}
+              Log out { currentUser.username }
             </Link>
           </li>
         </ul>

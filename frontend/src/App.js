@@ -6,11 +6,11 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import Navbar from "./routes/Navbar";
 import Routes from "./routes/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
-import JoblyApi from "./api/api";
+import GanzkorperApi from "./api/api";
 import UserContext from "./auth/UserContext";
 
 // Key name for storing token in localStorage for "remember me" re-login
-export const TOKEN_STORAGE_ID = "jobly-token";
+export const TOKEN_STORAGE_ID = "ganzkorper-token";
 
 /** Jobly application */
 function App() {
@@ -25,8 +25,8 @@ function App() {
         try {
           let { username } = decode(token);
           // put the token on the Api class so it can use it to call the API.
-          JoblyApi.token = token;
-          let currentUser = await JoblyApi.getCurrentUser(username);
+          GanzkorperApi.token = token;
+          let currentUser = username;
           setCurrentUser(currentUser);
           setApplicationIds(new Set(currentUser.applications));
         } catch (err) {
@@ -43,7 +43,7 @@ function App() {
 
   async function login(loginData) {
     try {
-      let token = await JoblyApi.login(loginData);
+      let token = await GanzkorperApi.login(loginData);
       setToken(token);
       return { success: true };
     } catch (errors) {
@@ -60,7 +60,7 @@ function App() {
 
   async function signup(signupData) {
     try {
-      let token = await JoblyApi.signup(signupData);
+      let token = await GanzkorperApi.signup(signupData);
       setToken(token);
       return { success: true };
     } catch (errors) {
@@ -69,22 +69,16 @@ function App() {
     }
   }
 
-  function hasAppliedToJob(id) {
-    return applicationIds.has(id);
-  }
-
-  function applyToJob(id) {
-    if (hasAppliedToJob(id)) return;
-    JoblyApi.applyToJob(currentUser.username, id);
-    setApplicationIds(new Set([...applicationIds, id]));
-  }
+  //write additional functions here to add more features later on
+  //update history; add missing workout to database; among others!
 
   if (!infoLoaded) return <LoadingSpinner />;
 
   return (
     <BrowserRouter>
         <UserContext.Provider
-            value={{ currentUser, setCurrentUser, hasAppliedToJob, applyToJob }}>
+            //additonal function calls should be passed in here after setCurrentUser 
+            value={{ currentUser, setCurrentUser }}>
           <div className="App">
             <Navbar logout={logout} />
             <Routes login={login} signup={signup} />

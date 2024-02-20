@@ -1,9 +1,12 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
-import CompanyList from "../companies/CompanyList";
-import JobList from "../jobs/JobList";
-import CompanyDetail from "../companies/CompanyDetail";
+
+import WorkoutList from "../workouts/WorkoutList";
+import ExerciseList from "../exercises/ExerciseList";
+import WorkoutDetail from "../workouts/WorkoutDetail";
+import ExerciseDetail from "../exercises/ExerciseDetail";
+
 import LoginForm from "../auth/LoginForm";
 import ProfileForm from "../profile/ProfileForm";
 import SignupForm from "../auth/SignupForm";
@@ -12,9 +15,10 @@ import PrivateRoute from "./PrivateRoute";
 /** 
  * File containing all the routes for the application 
  * / : Homepage — just a simple welcome message
- * /companies : List all companies
- * /companies/apple : View details of this company
- * /jobs : List all jobs
+ * /exercises : List all exercises
+ * /exercises/squat : View details of squat exercise
+ * /workouts : display user profile of workouts
+ * /workouts/pull_day : View details of pull_day workout
  * /login : Login/signup
  * /signup : Signup form
  * /profile : Edit profile page
@@ -29,17 +33,21 @@ function Routes({login, signup}){
               <Homepage />
             </Route>
   
-            <PrivateRoute exact path="/companies">
-              <CompanyList />
-            </PrivateRoute>
+                  <PrivateRoute exact path="/exercises">
+                    <ExerciseList />
+                  </PrivateRoute>
 
-            <PrivateRoute exact path="/companies/:handle">
-              <CompanyDetail />
-            </PrivateRoute>
+                  <PrivateRoute exact path="/exercises/:name">
+                    <ExerciseDetail />
+                  </PrivateRoute>
 
-            <PrivateRoute exact path="/jobs">
-              <JobList />
-            </PrivateRoute>
+                  <PrivateRoute exact path="/workouts">
+                    <WorkoutList />
+                  </PrivateRoute>
+
+                  <PrivateRoute exact path="/workouts">
+                    <WorkoutDetail />
+                  </PrivateRoute>
   
             <Route exact path="/login">
               <LoginForm login={login} />

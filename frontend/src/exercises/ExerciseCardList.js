@@ -1,5 +1,5 @@
 import React from "react";
-import JobCard from "./JobCard";
+import JobCard from "./ExerciseCard";
 
 /** Renders a list of job card components */
 function JobCardList({ jobs, apply }) {

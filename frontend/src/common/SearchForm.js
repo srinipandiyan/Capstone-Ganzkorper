@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SearchForm.css";
 
-/** Search form componnet that is available on on CompanyList and JobList components for filtering of companies and jobs å*/
+/** Search form component that is available on on ExerciseList and WorkoutList components for filtering of companies and jobs å*/
 function SearchForm({ searchFor }) {
   console.debug("SearchForm", "searchFor=", typeof searchFor);
 

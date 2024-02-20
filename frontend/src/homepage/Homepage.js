@@ -11,11 +11,11 @@ function Homepage() {
   return (
       <div className="Homepage">
         <div className="container text-center">
-          <h1 className="mb-4 font-weight-bold">Jobly</h1>
-          <p className="lead">All the jobs in one, convenient place.</p>
+          <h1 className="mb-4 font-weight-bold">Ganzkorper</h1>
+          <p className="lead">All your exercises, in one place.</p>
           {currentUser
               ? <h2>
-                Welcome Back, {currentUser.firstName || currentUser.username}!
+                Welcome Back, { currentUser.username }!
               </h2>
               : (
                   <p>

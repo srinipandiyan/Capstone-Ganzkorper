@@ -8,9 +8,6 @@ function SignupForm({ signup }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    firstName: "",
-    lastName: "",
-    email: "",
   });
   const [formErrors, setFormErrors] = useState([]);
 
@@ -23,14 +20,14 @@ function SignupForm({ signup }) {
 
   /** Handle form submit:
    *
-   * Calls login func prop and, if successful, redirect to /companies.
+   * Calls login func prop and, if successful, redirect to /exercises.
    */
 
   async function handleSubmit(evt) {
     evt.preventDefault();
     let result = await signup(formData);
     if (result.success) {
-      history.push("/companies");
+      history.push("/exercises");
     } else {
       setFormErrors(result.errors);
     }
@@ -65,35 +62,6 @@ function SignupForm({ signup }) {
                       name="password"
                       className="form-control"
                       value={formData.password}
-                      onChange={handleChange}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>First name</label>
-                  <input
-                      name="firstName"
-                      className="form-control"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Last name</label>
-                  <input
-                      name="lastName"
-                      className="form-control"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Email</label>
-                  <input
-                      type="email"
-                      name="email"
-                      className="form-control"
-                      value={formData.email}
                       onChange={handleChange}
                   />
                 </div>

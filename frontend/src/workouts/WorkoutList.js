@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchForm from "../common/SearchForm";
 import JoblyApi from "../api/api";
-import CompanyCard from "./CompanyCard";
+import CompanyCard from "./WorkoutCard";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 /** Displays page containing list of company cards */
