@@ -1,22 +1,22 @@
 import React from "react";
-import JobCard from "./ExerciseCard";
+import ExerciseCard from "./ExerciseCard";
 
-/** Renders a list of job card components */
-function JobCardList({ jobs, apply }) {
+/** Renders a list of exercise card components */
+function ExerciseCardList({ exercises }) {
   return (
-      <div className="JobCardList">
-        {jobs.map(job => (
-            <JobCard
-                key={job.id}
-                id={job.id}
-                title={job.title}
-                salary={job.salary}
-                equity={job.equity}
-                companyName={job.companyName}
+      <div className="ExerciseCardList">
+        {exercises.map(e => (
+            <ExerciseCard
+                key={e.id}
+                name={e.name}
+                type={e.type}
+                muscle={e.muscle}
+                equipment={e.equipment}
+                difficulty={e.difficulty}
             />
         ))}
       </div>
   );
 }
 
-export default JobCardList;
+export default ExerciseCardList;

@@ -4,7 +4,6 @@ import Homepage from "../homepage/Homepage";
 
 import WorkoutList from "../workouts/WorkoutList";
 import ExerciseList from "../exercises/ExerciseList";
-import WorkoutDetail from "../workouts/WorkoutDetail";
 import ExerciseDetail from "../exercises/ExerciseDetail";
 
 import LoginForm from "../auth/LoginForm";
@@ -33,21 +32,17 @@ function Routes({login, signup}){
               <Homepage />
             </Route>
   
-                  <PrivateRoute exact path="/exercises">
-                    <ExerciseList />
-                  </PrivateRoute>
+            <PrivateRoute exact path="/exercises">
+              <ExerciseList />
+            </PrivateRoute>
 
-                  <PrivateRoute exact path="/exercises/:name">
-                    <ExerciseDetail />
-                  </PrivateRoute>
+            <PrivateRoute exact path="/exercises/:name">
+              <ExerciseDetail />
+            </PrivateRoute>
 
-                  <PrivateRoute exact path="/workouts">
-                    <WorkoutList />
-                  </PrivateRoute>
-
-                  <PrivateRoute exact path="/workouts">
-                    <WorkoutDetail />
-                  </PrivateRoute>
+            <PrivateRoute exact path="/workouts">
+              <WorkoutList />
+            </PrivateRoute>
   
             <Route exact path="/login">
               <LoginForm login={login} />

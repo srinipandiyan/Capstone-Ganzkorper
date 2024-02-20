@@ -1,22 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./CompanyCard.css";
+import "./WorkoutCard.css";
 
-/** Component renders company card to provide info on a company */
-function CompanyCard({ name, description, logoUrl, handle }) {
+/** Component renders workout card to provide info on a workout */
+function WorkoutCard({ name, exercises}) {
   return (
-      <Link className="CompanyCard card" to={`/companies/${handle}`}>
+      <Link className="WorkoutCard card" to={`/workouts/${name}`}>
         <div className="card-body">
           <h6 className="card-title">
             {name}
-            {logoUrl && <img src={logoUrl}
-                             alt={name}
-                             className="float-right ml-5" />}
           </h6>
-          <p><small>{description}</small></p>
+            <ul>
+              {exercises.map((exercise) => (
+                <li key={exercise.id}>{exercise.name}</li>
+              ))}
+          </ul>
         </div>
       </Link>
   );
 }
 
-export default CompanyCard;
+export default WorkoutCard;
