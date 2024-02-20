@@ -13,7 +13,7 @@ Capstone Two is a fitness tracking web application built with React for the fron
 
 - **Frontend**: Developed using React.js and Bootstrap, providing a responsive user interface.
 - **Backend**: Node.js serves as the backend, handling data processing and API requests.
-- **Database**: PostgreSQL is used for data storage.
+- **Database**: PostgreSQL is used for data storage
 - **Security**: User passwords are hashed before storage in the database to ensure sensitive data protection.
 - **API Integration**: The app leverages the [Ninja Exercise API](https://api-ninjas.com/api/exercises) for exercise data, with regular testing to address any API-related issues.
 
