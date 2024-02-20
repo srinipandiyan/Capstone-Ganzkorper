@@ -42,4 +42,4 @@ Capstone Two is a fitness tracking web application built with React for the fron
 - React.js
 - PostgreSQL
 
-This project aims to provide users with a comprehensive fitness tracking solution, combining user-friendly design with powerful functionality to support users in achieving their health and fitness goals.
+Overall, this project aims to provide users with a comprehensive fitness tracking solution, combining user-friendly design with powerful functionality to support users in achieving their health and fitness goals.

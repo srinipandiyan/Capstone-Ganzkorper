@@ -2,9 +2,8 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
 
-import WorkoutList from "../workouts/WorkoutList";
-import ExerciseList from "../exercises/ExerciseList";
-import ExerciseDetail from "../exercises/ExerciseDetail";
+import WorkoutList from "../workouts/WorkoutCardList";
+import ExerciseList from "../exercises/ExerciseCardList";
 
 import LoginForm from "../auth/LoginForm";
 import ProfileForm from "../profile/ProfileForm";
@@ -34,10 +33,6 @@ function Routes({login, signup}){
   
             <PrivateRoute exact path="/exercises">
               <ExerciseList />
-            </PrivateRoute>
-
-            <PrivateRoute exact path="/exercises/:name">
-              <ExerciseDetail />
             </PrivateRoute>
 
             <PrivateRoute exact path="/workouts">

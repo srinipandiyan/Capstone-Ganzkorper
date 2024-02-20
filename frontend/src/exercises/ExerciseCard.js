@@ -5,12 +5,11 @@ import "./ExerciseCard.css";
 function ExerciseCard({ name, type, muscle, equipment, difficulty }) {
 
   return (
-      <div className="ExerciseCard card"> {applied}
+      <div className="ExerciseCard card">
         <div className="card-body">
-          <h6 className="card-title">{title}</h6>
-          <p>{name}</p>
+          <h6 className="card-title">{name}</h6>
+          <p>{muscle}</p>
           <div><small>{type}</small></div>
-          <div><small>{muscle}</small></div>
           <div><small>{equipment}</small></div>
           <div><small>{difficulty}</small></div>
         </div>
