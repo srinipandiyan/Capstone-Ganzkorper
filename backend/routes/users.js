@@ -12,22 +12,6 @@ const userUpdateSchema = require("../schemas/userUpdate.json");
 
 const router = express.Router();
 
-/** GET /[username] => { [ { id, workout_name}, ... ] }
- *
- * Returns list of all workouts for a user.
- *
- * Authorization required: username-matched user or admin
- **/
-
-router.get("/:username", verifyUserOrAdmin, async function (req, res, next) {
-  try {
-    const workouts = await User.getWorkouts(req.params.username);
-    return res.json({ workouts });
-  } catch (err) {
-    return next(err);
-  }
-});
-
 /** PATCH /[username] { user } => { user }
  *
  * Data can include:

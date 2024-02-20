@@ -7,26 +7,43 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 const { verifyUserOrAdmin } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
+const User = require("../models/user");
 const Workout = require("../models/workout");
 const workoutCreateSchema = require("../schemas/workoutCreate.json");
 const workoutUpdateSchema = require("../schemas/workoutUpdate.json");
 
 const router = new express.Router();
 
-/** GET /[workoutName] => { [ { id, name, type, muscle, equipment, difficulty, instructions }, ... ] }
+/** GET /[username] => { [ { id, workout_name}, ... ] }
  *
- * Returns list of all exercises for a workout.
+ * Returns list of all workouts for a user.
  *
  * Authorization required: username-matched user or admin
  **/
-router.get("/:id", verifyUserOrAdmin, async function (req, res, next) {
-    try {
-      const exercises = await Workout.getExercises(req.params.id);
-      return res.json({ exercises });
-    } catch (err) {
-      return next(err);
-    }
+
+router.get("/:username", verifyUserOrAdmin, async function (req, res, next) {
+  try {
+    const workouts = await User.getWorkouts(req.params.username);
+    return res.json({ workouts });
+  } catch (err) {
+    return next(err);
+  }
 });
+
+// /** GET /[workoutName] => { [ { id, name, type, muscle, equipment, difficulty, instructions }, ... ] }
+//  *
+//  * Returns list of all exercises for a workout.
+//  *
+//  * Authorization required: username-matched user or admin
+//  **/
+// router.get("/:id", verifyUserOrAdmin, async function (req, res, next) {
+//     try {
+//       const exercises = await Workout.getExercises(req.params.id);
+//       return res.json({ exercises });
+//     } catch (err) {
+//       return next(err);
+//     }
+// });
 
 
 /** POST /[user] => { id, userRef, workoutName }
