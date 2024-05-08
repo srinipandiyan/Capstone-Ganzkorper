@@ -1,5 +1,9 @@
 .Homepage {
   height: calc(100vh - 150px);
   display: flex;
+  color: rgb(245, 245, 245);
   align-items: center;
+  background-image: url('/public/background.jpg');
+  background-size: cover;
+  background-position: center center;
 }

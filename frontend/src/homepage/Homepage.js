@@ -11,8 +11,8 @@ function Homepage() {
   return (
       <div className="Homepage">
         <div className="container text-center">
-          <h1 className="mb-4 font-weight-bold">Ganzkorper</h1>
-          <p className="lead">All your exercises, in one place.</p>
+          <h1 className="mb-4 font-weight-bold">Ganzkörper</h1>
+          <p className="lead font-weight-normalç">All your exercises, in one place.</p>
           {currentUser
               ? <h2>
                 Welcome Back, { currentUser.username }!
